@@ -1,13 +1,15 @@
 :root {
 	/* font-size */
+	--font-size: 28px;
 	--heading: 1.6rem;
 	--body: 1rem;
 	--caption: 0.66rem;
-	--font-family: 'Source Code Pro', monospace;
+	--font-family: Roboto; 
+	
 
 	/* colors */
-	--primary: #000;
-	--secondary: #E3E3E3;
+	--forefround: #000;
+	--background: #22D3D8;
 	--highlight: #8E05C2;
 
 	/* Margin */
