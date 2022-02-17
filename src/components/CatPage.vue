@@ -5,16 +5,16 @@
 
     <main class="cat-main">
         <div class="cat-main__search">
-            <input type="text" placeholder="Enter your place..." v-model="place" @keypress="fetchWeatherData">
+            <input type="text" placeholder="Enter your place..." v-model="place">
             <button>
-                <img src="/images/svg/search.svg" alt="Search-icon">
+                <img @click="fetchWeatherData" src="/images/svg/search.svg" alt="Search-icon">
             </button>
         </div>
 
         <div class="cat-main__weather">
             <h2>{{ getPlace }}</h2>
-            <div v-if=" place !== '' " v-bind="convertWholeNumber">{{ weather }}°C</div>
-            <img :src="getWeatherIcon" alt="">
+            <div>{{getWeather}}  </div>
+            <img v-bind="checkWeatherIcon" :src="getWeatherIcon" alt="">
             <div>{{ getDescription }}</div>
         </div>
     </main>
@@ -34,37 +34,67 @@
                 getWeather: '',
                 getDescription: '',
                 getWeatherIcon: '',
-                weather: '',
+                mainDescription: '',
             }
         },
 
         created() {
-            this.fetchWeatherData();
+            // this.fetchWeatherData();
+            // this.checkWeatherIcon();
         },
 
         methods: {
             async fetchWeatherData() {
                 const client_id_key = import.meta.env.VITE_OPENWEATHER_ACCES_KEY;
-                console.log(client_id_key);
-
                 const weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${this.place}&units=metric&appid=${client_id_key}`;
-                const responseWeather = await fetch(weatherURL);
-                const weatherOutput = await responseWeather.json();
-
-                console.log(weatherOutput);
                 
-                this.getPlace = weatherOutput.name;
-                this.getWeather = weatherOutput.main.temp;
-                this.getDescription = weatherOutput.weather[0].description;
+                let error = '';
+                try {
+                    const responseWeather = await fetch(weatherURL);
+                    const weatherOutput = await responseWeather.json();
+                    
+                    if(weatherOutput.cod !== 200) {
+                        handleError(weatherOutput.cod);
+                    } else {
+                        this.handleWeatherData(weatherOutput);  
+                    } 
+                
+                } catch (error) {
+                    return 'error';
+                }
 
-                this.getWeatherIcon = `https://openweathermap.org/img/wn/${weatherOutput.weather[0].icon}.png`;
+                // this.getWeatherIcon = `https://openweathermap.org/img/wn/${weatherOutput.weather[0].icon}.png`;
+            },
+
+            handleWeatherData(weatherOutput) {
+                this.getPlace = weatherOutput.name;
+                this.getWeather = `${Math.round(weatherOutput.main.temp)}°C`;
+                this.getDescription = weatherOutput.weather[0].description;
+                this.mainDescription = weatherOutput.weather[0].main; 
+
+            },
+
+            handleError(cod) {
+                if(cod === 404) {
+                    error = 'file is not found';
+                    console.error(error);
+                }
             }
         },
 
         computed: {
             convertWholeNumber() {
-                this.weather = Math.round(this.getWeather);
+                // this.weather = Math.round(this.getWeather);
                 // this.weather = '';
+            },
+
+            checkWeatherIcon() {
+                if(this.mainDescription === 'Clouds') {
+                    this.getWeatherIcon = '/images/svg/clouds.svg';
+                } else {
+                    this.getWeatherIcon = '';
+                    // this.getWeather = 'https://openweathermap.org/img/wn/01n.png';
+                }
             }
         },
     }
@@ -72,7 +102,7 @@
 
 <style>
     .cat-header {
-        height: 20%;
+        height: 10%;
     }
 
     .cat-header img {
@@ -91,9 +121,23 @@
         margin-bottom: var(--bottom-small);
     }
 
+    .cat-main__search {
+        display: flex;
+    }
+
+    .cat-main__search input {
+        border: none;
+        outline: none;
+        padding: 0.5em 1em;
+        background: #FEE100;
+        border-radius: 25px;
+        cursor: pointer;
+    }
+
     .cat-image {
+        height: 800px;
         width: 50%;
-        margin-top: 20px;
+        margin-top: 50px;
 		margin-left: auto;
 		margin-right: auto;
 		display: flex;
@@ -103,6 +147,6 @@
     }
 
     .cat-image img {
-        width: 30%;
+        width: 20%;
     }
 </style>
