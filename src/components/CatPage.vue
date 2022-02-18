@@ -1,28 +1,30 @@
 <template>
-    <header class="cat-header">
-        <img src="/images/svg/logo-with-clouds.svg" alt="logo-with-clouds-icon">
-    </header>
+    <section class="cat-section">
+        <header class="cat-header">
+            <img src="/images/svg/logo-with-clouds.svg" alt="logo-with-clouds-icon">
+        </header>
 
-    <main class="cat-main">
-        <div class="cat-main__search">
-            <input type="text" placeholder="Enter your place..." v-model="place">
-            <button>
-                <img @click="fetchWeatherData" src="/images/svg/search.svg" alt="Search-icon">
-            </button>
+        <main class="cat-main">
+            <div class="cat-main__search">
+                <input type="text" placeholder="Enter your place..." v-model="place" @keyup.enter="fetchWeatherData">
+                <button>
+                    <img @click="fetchWeatherData" src="/images/svg/search.svg" alt="Search-icon">
+                </button>
+            </div>
+
+            <div class="cat-main__weather">
+                <h2>{{ getPlace }}</h2>
+                <h3>{{getWeather}}</h3>
+                <img :src="getWeatherIcon" alt="">
+                <div>{{ getDescription }}</div>
+            </div>
+        </main>
+
+        <div class="cat-image">
+            <img class="" src="/images/svg/cat.svg" alt="cat">
+            <img src="/images/svg/cat-says.svg" alt="Cat-Says-Meow">
         </div>
-
-        <div class="cat-main__weather">
-            <h2>{{ getPlace }}</h2>
-            <div>{{getWeather}}  </div>
-            <img v-bind="checkWeatherIcon" :src="getWeatherIcon" alt="">
-            <div>{{ getDescription }}</div>
-        </div>
-    </main>
-
-    <div class="cat-image">
-        <img class="" src="/images/svg/cat.svg" alt="cat">
-        <img src="/images/svg/cat-says.svg" alt="Cat-Says-Meow">
-    </div>
+    </section>
 </template>
 
 <script>
@@ -54,7 +56,7 @@
                     const weatherOutput = await responseWeather.json();
                     
                     if(weatherOutput.cod !== 200) {
-                        handleError(weatherOutput.cod);
+                        this.handleError(weatherOutput.cod);
                     } else {
                         this.handleWeatherData(weatherOutput);  
                     } 
@@ -62,15 +64,14 @@
                 } catch (error) {
                     return 'error';
                 }
-
-                // this.getWeatherIcon = `https://openweathermap.org/img/wn/${weatherOutput.weather[0].icon}.png`;
             },
 
             handleWeatherData(weatherOutput) {
                 this.getPlace = weatherOutput.name;
-                this.getWeather = `${Math.round(weatherOutput.main.temp)}°C`;
+                this.getWeather = `${Math.round(weatherOutput.main.temp)}°C`;    // Math.round helps to display the integer temprature
                 this.getDescription = weatherOutput.weather[0].description;
                 this.mainDescription = weatherOutput.weather[0].main; 
+                this.getWeatherIcon = `https://openweathermap.org/img/wn/${weatherOutput.weather[0].icon}.png`;
 
             },
 
@@ -83,17 +84,13 @@
         },
 
         computed: {
-            convertWholeNumber() {
-                // this.weather = Math.round(this.getWeather);
-                // this.weather = '';
-            },
-
             checkWeatherIcon() {
                 if(this.mainDescription === 'Clouds') {
-                    this.getWeatherIcon = '/images/svg/clouds.svg';
-                } else {
-                    this.getWeatherIcon = '';
-                    // this.getWeather = 'https://openweathermap.org/img/wn/01n.png';
+                    this.getWeatherIcon = '/images/gif/clouds.gif';
+                } if(this.mainDescription === 'Clear') {
+                    this.getWeatherIcon = '/images/gif/sun.gif';
+                }  if(this.mainDescription === 'Rain') {
+
                 }
             }
         },
@@ -101,6 +98,12 @@
 </script>
 
 <style>
+    .cat-section {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
     .cat-header {
         height: 10%;
     }
@@ -125,7 +128,12 @@
         display: flex;
     }
 
+    .cat-image__weather {
+        background: url('/images/3klZ.gif');
+    }
+
     .cat-main__search input {
+        width: 30vw;
         border: none;
         outline: none;
         padding: 0.5em 1em;
@@ -135,9 +143,9 @@
     }
 
     .cat-image {
-        height: 800px;
+        height: 100%;
         width: 50%;
-        margin-top: 50px;
+        /* margin-top: 50px; */
 		margin-left: auto;
 		margin-right: auto;
 		display: flex;
