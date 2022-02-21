@@ -56,7 +56,9 @@
                     const weatherOutput = await responseWeather.json();
                     
                     if(weatherOutput.cod !== 200) {
-                        this.handleError(weatherOutput.cod);
+                        // console.log('hi')
+                        this.handleError(weatherOutput);
+                        // console.log('hi')
                     } else {
                         this.handleWeatherData(weatherOutput);  
                     } 
@@ -75,10 +77,15 @@
 
             },
 
-            handleError(cod) {
-                if(cod === 404) {
+            handleError(weatherOutput) {
+
+                console.log(weatherOutput.cod);
+                const data = weatherOutput.cod;
+                console.log(data);
+                if(data === 404) {
+                    
                     error = 'file is not found';
-                    console.error(error);
+                    console.log(error);
                 }
             }
         },
