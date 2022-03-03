@@ -1,42 +1,37 @@
 <template>
-	<header class="home__header">
-		<img src="/images/svg/logo-with-clouds.svg" alt="logo-with-clouds-icon">
-	</header>
-
-	<main class="home__main">
-		<h2>Are you a cat or a dog person?</h2>
-
-		<h4>(Don't worry we won't judge!)</h4>
-
-		<img src="/images/svg/basket.svg" alt="animal-basket">
-	</main>
-
-	<div class="home__buttons">
-		<RouterLink :to="{ name: 'cat-page', path: '/cat-page', component: CatPageView }">
-			<div class="home__buttons--fish">
-				<button @click="catButton">
-					<img src="/images/svg/fish.svg" alt="fish-icon">
-					<h4>Cat</h4>
-				</button>
-			</div>
+	<section class="home">
+		<RouterLink :to="{ name:'home' }">
+			<Logo />
 		</RouterLink>
 
-		<RouterLink :to="{ name: 'dog-page', path: '/dog-page', component: DogPageView }">
-			<div class="home__buttons-bone">
-					<button>
-						<img src="/images/svg/bone.svg" alt="bone-icon">
-						<h4>Dog</h4>
-					</button>
+		<main class="home__pet-select">
+			<div class="home__pet-select-question">
+				<h2>Are you a cat or a dog person?</h2>
+
+				<h4>(Don't worry we won't judge!)</h4>
+
+				<img src="/images/svg/basket.svg" alt="animal-basket">
 			</div>
-		</RouterLink>
-	</div>
+		
+			<div class="home__pet-select-buttons">
+				<RouterLink v-for="page in pagesFromStore" :key="page.id" :to="{ name: 'page', params: { page_id: page.id } }">
+					<nav class="">
+						<!-- <button @click="catButton"> -->
+							<img :src="page.file" :alt="page.caption">
+							<h4>{{ page.title }}</h4>
+						<!-- </button> -->
+					</nav>
+				</RouterLink>
+			</div>
+		</main>
+	</section>
 </template>
 
 <script>
-// import DogPage from './DogPage.vue'
+import Logo from '../components/Logo.vue';
 	export default {
 		components: {
-			// DogPage
+			Logo
 		},
 
 		data() {
@@ -45,37 +40,62 @@
 			}
 			
 		},
+
+		computed: {
+			pagesFromStore() {
+				return this.$store.getters.getPages;
+			}
+		},
 	}
 </script>
 
 <style>
-	.home__header {
-		height: 20%;
+	.home {
+		/* position: relative; */
 	}
 
-	.home__header img {
-		width: 22%;
-	}
-
-	.home__main {
+	.home__pet-select {
+		min-height: 100vh;
 		display: flex;
-		flex-direction: column;
-		justify-content: center;
 		align-items: center;
+		justify-content: center;
+		flex-direction: column;
 		text-align: center;
 	}
 
-	.home__main > * {
-		margin-bottom: var(--bottom-small) ;
+	.home__pet-select-question {
+		font-size: var(--body);
 	}
 
-	.home__buttons {
-		width: 50%;
-		margin-left: auto;
-		margin-right: auto;
+	.home__pet-select-question > * {
+		padding: var(--padding-small);
+	}
+
+	.home__pet-select-question img {
+		width: 9em;
+	}
+
+	.home__pet-select-buttons {
+		width: 70%;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+	}
+
+	.home__pet-select-buttons img {
+		width: 3.5em;
+	}
+
+	/* Medium screen devices (968px and above) */
+    @media screen and (min-width: 968px) {
+		.home__pet-select-question {
+			font-size: var(--heading);
+		}
+
+		.home__pet-select-buttons {
+			width: 50%;
+		}
+
 	}
 </style>
 

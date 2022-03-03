@@ -7,6 +7,6 @@
     export default {
         components: {
             Home
-        }
+        },
     }
 </script>
