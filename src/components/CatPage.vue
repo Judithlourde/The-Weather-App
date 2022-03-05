@@ -6,9 +6,9 @@
 
         <main class="cat-page__main">
             <div class="cat-page__main-search">
-                <input type="text" placeholder="Enter your place..." v-model="place" @keyup.enter="fetchWeatherData">
+                <input type="text" placeholder="Enter your place..." v-model="place" @keyup.enter="this.$store.dispatch('fetchWeatherData', this.place)">
                 <button>
-                    <img @click="fetchWeatherData" src="/images/svg/search.svg" alt="Search-icon">
+                    <img @click="this.$store.dispatch('fetchWeatherData', this.place)" src="/images/svg/search.svg" alt="Search-icon">
                 </button>
             </div>
         
@@ -17,19 +17,23 @@
                 <img class="cat-page__main-weather-cat" src="/images/svg/cat.svg" alt="cat-image">
 
                 <div class="cat-page__main-weather-display">
-                    <div>{{ location }}</div>
-
-                    <h3>{{ getPlace }}</h3>
-                    <h4>{{ getWeather }}</h4>
-                    <div v-if="handleError">{{ error }}</div>
-                    <h6>{{`Feels Like: ${getFeelsWeather}` }}</h6>
-                    <img :src="getWeatherIcon" alt="">
-                    <div>{{ getDescription }}</div>
+                    <div>
+                        <h4>{{ getLocation.place }}</h4>
+                        <div>{{ getLocation.temprature }}</div>
+                        <img v-if="getLocation.error === ''" :src="getLocation.icon" alt="Weather-icon">
+                        <div>{{ getLocation.description }}</div>
+                        <div>{{ getLocation.error }}</div>
+                    </div>
                     
+                    <div v-if="getWeather.error === ''">
+                        <h4>{{ getWeather.place }}</h4>
+                        <div>{{ getWeather.temprature }}</div>
+                        <img v-if="getWeather.error === ''" :src="getWeather.icon" alt="Weather-icon">
+                        <div>{{ getWeather.description }}</div>
+                    </div>
                     
-                    <!-- <div v-if="handleError">Type the correct palce</div> -->
-
-
+                    <div>{{ getWeather.error }}</div>
+                     
                 </div>
             </div>   
         </main>
@@ -45,122 +49,16 @@ import Logo from '../components/Logo.vue';
 
         data() {
             return {
-                place: '',
-                getPlace: '',
-                getWeather: '',
-                getFeelsWeather: '',
-                getDescription: '',
-                getWeatherIcon: '',
-                mainDescription: '',
-                error: '',
-                latitude: '',
-                fixedLatitude: '',
-                longitude: '',
-                fixedLongitude: '',
-                location: '',
+                
             }
         },
 
-        mounted() {
-            // this.fetchGeolocation();
+        mounted: async function() {
+            this.$store.dispatch('fetchGeoCode');
         },
 
         created() {
-            // this.fetchWeatherData();
-            // this.checkWeatherIcon();
-            this.fetchGeolocation();
-            // this.changeLatitude();
-        },
-
-        methods: {
-            async fetchGeolocation() {
-                navigator.geolocation.getCurrentPosition(position => {
-                    this.latitude = position.coords.latitude;
-                    this.longitude = position.coords.longitude;
-                    this.fixedLatitude = this.latitude.toFixed(1);
-                    this.fixedLongitude = this.longitude.toFixed(1);
-                    // console.log(Number (this.latitude.toFixed(1)));
-                    // console.log( typeof(this.latitude) === "number");
-                    // console.log(this.longitude.toFixed (1));
-                    this.fetchLocation();
-                });
-            },
-
-            async fetchLocation() {
-                const client_id_key = import.meta.env.VITE_OPENWEATHER_ACCES_KEY;
-                const locationUrl = `http://api.openweathermap.org/data/2.5/weather?lat=${this.fixedLatitude}&lon=${this.fixedLongitude}&units=metric&appid=${client_id_key}`;
-                
-
-                try {
-                    const responseLocation = await fetch(locationUrl);
-                    const locationOutput = await responseLocation.json();
-                    console.log(locationOutput);
-                    this.location = locationOutput.name;
-
-                } catch {
-
-                }
-            },
-            
-            async fetchWeatherData() {
-                const client_id_key = import.meta.env.VITE_OPENWEATHER_ACCES_KEY;
-                const weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${this.place}&units=metric&appid=${client_id_key}`;
-                
-                try {
-                    const responseWeather = await fetch(weatherURL);
-                    const weatherOutput = await responseWeather.json();
-
-                    // console.log(responseWeather);
-                    if(responseWeather.status >= 200 && responseWeather.status < 300) {
-                        this.handleWeatherData(weatherOutput); 
-                        // return true;
-                        this.error = '';
-                        console.log('ok');
-                    } else {
-                        this.handleError(responseWeather);
-                       
-				}
-                
-                } catch (error) {
-                    // console.log(error);
-                    this.getPlace = '';
-                    this.getWeather = '';
-                    this.getFeelsWeather = '';
-                    this.getDescription = '';
-                    this.getWeatherIcon = '';
-                    this.error = error.message;
-                }
-            },
-
-            handleWeatherData(weatherOutput) {
-                this.getPlace = weatherOutput.name;
-                this.getWeather = `${Math.round(weatherOutput.main.temp)}°C`;    // Math.round helps to display the integer (whole number) temprature
-                this.getFeelsWeather = `${Math.round(weatherOutput.main.feels_like)}°C`;
-                this.getDescription = weatherOutput.weather[0].description;
-                this.mainDescription = weatherOutput.weather[0].main; 
-                this.getWeatherIcon = `https://openweathermap.org/img/wn/${weatherOutput.weather[0].icon}.png`;
-
-            },
-
-            handleError(responseWeather) {
-                // let error = '';
-                let data = responseWeather.status;
-                // console.log(data);
-                if(data === 404) {
-                    console.log('Url ikke funnet!');
-                    throw new Error('Place does not exist, Write the correct Place!');
-                }
-                if(data === 401) {
-                    console.log('ikke authorisert');
-                    throw new Error('ikke authorisert');
-                }
-                if(data > 500) {
-                    console.log('server error');
-                    throw new Error('Servor error!');
-                }
-                throw new Error('Noe gikk galt!');
-                
-            }
+            // this.$store.getters.currentWeather;
         },
 
         computed: {
@@ -173,7 +71,20 @@ import Logo from '../components/Logo.vue';
 
                 }
             },
+
+            getWeather() {
+                return this.$store.getters.currentWeather;
+            }, 
+
+            getLocation() {
+                return this.$store.getters.currentLocationWeather;
+            }, 
+
+            getError() {
+                return this.$store.getters.errorMessage;
+            }
         },
+            
     }
 </script>
 
