@@ -62,16 +62,6 @@ import Logo from '../components/Logo.vue';
         },
 
         computed: {
-            checkWeatherIcon() {
-                if(this.mainDescription === 'Clouds') {
-                    this.getWeatherIcon = '/images/gif/clouds.gif';
-                } if(this.mainDescription === 'Clear') {
-                    this.getWeatherIcon = '/images/gif/sun.gif';
-                }  if(this.mainDescription === 'Rain') {
-
-                }
-            },
-
             getWeather() {
                 return this.$store.getters.currentWeather;
             }, 
@@ -89,12 +79,12 @@ import Logo from '../components/Logo.vue';
 </script>
 
 <style>
-    .cat-page__main {
+    /* .cat-page__main {
         min-height: 100vh;
 		display: flex;
         flex-direction: column;
 		align-items: center;
-		/* justify-content: space-around; */
+		justify-content: space-around;
 		text-align: center;
     }
 
@@ -103,12 +93,12 @@ import Logo from '../components/Logo.vue';
         justify-content: space-between;
         align-items: center;
         padding: var(--padding-xsmall);
-        margin: 50px;
+        margin: 70px;
         background: #FEE100;
         border-radius: 22px;
         width: 15em; 
         z-index: 300;
-        /* height: 30%; */
+        height: 30%;
     }
 
      .cat-page__main-search input {
@@ -143,13 +133,13 @@ import Logo from '../components/Logo.vue';
         border-radius: 25px;
         width: 400px;
         height: 400px;
-    }
+    } */
 
     /* Medium screen devices (968px and above) */
     @media screen and (min-width: 968px) {
         .cat-page__main-search {
             /* margin: 0; */
-            width: 25em; 
+            /* width: 25em;  */
         }
     }
 </style>

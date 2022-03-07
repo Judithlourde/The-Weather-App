@@ -5,37 +5,60 @@
 		</RouterLink>    
 
         <main class="cat-page__main">
-            <div class="cat-page__main-search">
-                <input type="text" placeholder="Enter your place..." v-model="place" @keyup.enter="this.$store.dispatch('fetchWeatherData', this.place)">
+            <div class="cat-page__main-search" role="search">
                 <button>
-                    <img @click="this.$store.dispatch('fetchWeatherData', this.place)" src="/images/svg/search.svg" alt="Search-icon">
+                    <!-- dispatch calling the actions in modules and sending the place (payload) -->
+                    <img @click="this.$store.dispatch('fetchWeatherData', this.place), weatherDisplay()" src="/images/svg/search.svg" alt="Search-icon">
                 </button>
+
+                <!-- dispatch calling the actions in modules and sending the place (payload) -->
+                <input type="text" placeholder="Enter your place..." v-model="place" @keyup.enter="this.$store.dispatch('fetchWeatherData', this.place), weatherDisplay()">
             </div>
         
-        
             <div class="cat-page__main-weather">
-                <img class="cat-page__main-weather-cat" src="/images/svg/cat.svg" alt="cat-image">
+                <!-- <div class="cat-page__main-catIdea">
+                    <img class="cat-page__main-weather-cat" src="/images/svg/cat.svg" alt="cat-image"> 
+
+                    <figure>
+                        <img src="/images/svg/cloud.svg" alt="">
+                        <figcaption></figcaption>
+                    </figure>
+                </div> -->
 
                 <div class="cat-page__main-weather-display">
-                    <div>
-                        <h4>{{ getLocation.place }}</h4>
-                        <div>{{ getLocation.temprature }}</div>
-                        <img v-if="getLocation.error === ''" :src="getLocation.icon" alt="Weather-icon">
-                        <div>{{ getLocation.description }}</div>
-                        <div>{{ getLocation.error }}</div>
-                    </div>
                     
-                    <div v-if="getWeather.error === ''">
-                        <h4>{{ getWeather.place }}</h4>
-                        <div>{{ getWeather.temprature }}</div>
-                        <img v-if="getWeather.error === ''" :src="getWeather.icon" alt="Weather-icon">
-                        <div>{{ getWeather.description }}</div>
-                    </div>
+                        <h4>Current Location Weather:</h4>
+
+                        <div class="spinner" :class="{spinnerVisible: !visible}">Loading...
+                            <img src="/images/gif/clouds.gif" alt="clouds moving gif">
+                        </div>
+
+                        <div class="currentWeather" :class="{currentWeatherData: visible}">
+                            <h4>{{ getLocation.place }}</h4>
+                            <div>{{ getLocation.temprature }}</div>
+                            <img v-if="getLocation.error === ''" :src="getLocation.icon" alt="Weather-icon">
+                            <div>{{ getLocation.description }}</div>
+                            <div>{{ getLocation.error }}</div>
+                        </div>
+                 
+
+                    <hr> 
+                
+                        <h4>Search Result:</h4>
+
+                        <div class="weather" :class="{weatherData: isWeatherVisibile}">
+                            <h4>{{ getWeather.place }}</h4>
+                            <div>{{ getWeather.temprature }}</div>
+
+                            <!-- Checking the error message to avoid display img default icon -->
+                            <img v-if="getWeather.error === ''" :src="getWeather.icon" alt="Weather-icon">
+                            <div>{{ getWeather.description }}</div>
+                        </div>
+                        
+                        <div>{{ getWeather.error }}</div>
                     
-                    <div>{{ getWeather.error }}</div>
-                     
                 </div>
-            </div>   
+            </div>  
         </main>
     </section>
 </template>
@@ -48,30 +71,17 @@ import Logo from '../components/Logo.vue';
 		},
 
         data() {
-            return {
-                
+            return {  
+                isWeatherVisible: false, 
             }
         },
 
-        mounted: async function() {
+        mounted: async function() { 
+            // Calling the fetchGeoCode when the page mounted because it is a async function
             this.$store.dispatch('fetchGeoCode');
         },
 
-        created() {
-            // this.$store.getters.currentWeather;
-        },
-
         computed: {
-            checkWeatherIcon() {
-                if(this.mainDescription === 'Clouds') {
-                    this.getWeatherIcon = '/images/gif/clouds.gif';
-                } if(this.mainDescription === 'Clear') {
-                    this.getWeatherIcon = '/images/gif/sun.gif';
-                }  if(this.mainDescription === 'Rain') {
-
-                }
-            },
-
             getWeather() {
                 return this.$store.getters.currentWeather;
             }, 
@@ -82,8 +92,23 @@ import Logo from '../components/Logo.vue';
 
             getError() {
                 return this.$store.getters.errorMessage;
+            },
+
+            visible() {
+                return this.$store.getters.currentWeatherVisible;
             }
+
         },
+
+        methods: {
+            weatherDisplay() {
+                this.isWeatherVisibile = !this.isWeatherVisibile;
+            },
+
+            currentWeatherDisplay() {
+                this.isLocationWeather = !this.isLocationWeather;
+            }
+        }
             
     }
 </script>
@@ -91,6 +116,7 @@ import Logo from '../components/Logo.vue';
 <style>
     .cat-page__main {
         min-height: 100vh;
+        min-width: 100vw;
 		display: flex;
         flex-direction: column;
 		align-items: center;
@@ -100,21 +126,21 @@ import Logo from '../components/Logo.vue';
 
     .cat-page__main-search {
         display: flex;
-        justify-content: space-between;
         align-items: center;
         padding: var(--padding-xsmall);
-        margin: 50px;
-        background: #FEE100;
+        margin-top: 70px;
+        margin-bottom: var(--bottom-small);
+        background: var(--highlight);
         border-radius: 22px;
-        width: 15em; 
+        width: 2em; 
         z-index: 300;
         /* height: 30%; */
     }
 
-     .cat-page__main-search input {
+    .cat-page__main-search input {
         border: none;
         outline: none;
-        padding: 0.5em 1em;
+        /* padding: 0.4em 0.6em; */
         font-size: var(--body);
         cursor: pointer;
     }
@@ -128,9 +154,13 @@ import Logo from '../components/Logo.vue';
         height: 100%;
         width: 100%;
 		display: flex;
-        flex-direction: row;
+        /* flex-direction: row; */
 		justify-content: center;
 		align-items: center;
+    }
+
+    .cat-page__main-catIdea {
+        display: flex;
     }
 
     .cat-page__main-weather-cat {
@@ -138,18 +168,33 @@ import Logo from '../components/Logo.vue';
     }
 
     .cat-page__main-weather-display {
-        background: #FEE100;
+        background: var(--highlight);
         padding: 30px;
         border-radius: 25px;
-        width: 400px;
-        height: 400px;
+        width: 500px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
+
+    .weather,
+    .spinner,
+    .currentWeather {
+        display: none;
+    }     
+
+    .currentWeatherData,
+    .spinnerVisible,
+    .weatherData {
+        display: block;
+    } 
 
     /* Medium screen devices (968px and above) */
     @media screen and (min-width: 968px) {
         .cat-page__main-search {
             /* margin: 0; */
-            width: 25em; 
+            width: 15em; 
         }
     }
 </style>
