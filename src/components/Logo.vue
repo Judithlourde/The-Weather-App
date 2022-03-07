@@ -1,6 +1,6 @@
 <template>
     <header class="header">
-		<img src="/images/svg/logo-with-clouds.svg" alt="weatherApp-logo-link-to-homePage">
+		<img src="/images/svg/logo.svg" alt="weatherApp-logo-link-to-homePage">
 	</header>
 </template>
 
@@ -8,8 +8,9 @@
     .header {
         width: 100%;
         position: fixed;
-        top: 0;
-        left: 0;
+        top: 5px;
+        left: 5px;
+        /* bottom: 10px; */
         /* display: flex; */
         /* align-items: center; */
         /* justify-content: space-between; */
@@ -18,7 +19,7 @@
     }
 
     .header img {
-        width: 30%;
+        width: 20%;
     }
 
     /* Medium screen devices (968px and above) */
