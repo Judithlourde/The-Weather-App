@@ -20,13 +20,14 @@ export default {
                 description: '',
                 icon: '',
                 error: '',
-            },
+            }, 
             
+            currentWeatherVisible: false,
         }
     },
 
     mutations: {
-        getLocation(state, payload) {
+        handleCurrentWeather(state, payload) {
             state.currentLocationWeather.place = payload.name;
             state.currentLocationWeather.temprature = `${Math.round(payload.main.temp)}°C`;
             state.currentLocationWeather.feelsLike = `${Math.round(payload.main.feels_like)}°C`;
@@ -43,55 +44,55 @@ export default {
             state.currentWeather.description = payload.weather[0].description;
         },
 
+        // I have only one error handling mutation with payload for to different fetch data functions to avoid DRY code.  
         handleError(state, payload) {
-            // state.currentWeather = {};
             if(payload.status === 404) {
-                console.log('Url ikke funnet!');
-                throw new Error('Url ikke funnet!');
+                throw new Error('Sorry, Weather could not be found. Please write the correct place.');
             }
             if(payload.status === 401) {
-                console.log('ikke authorisert');
-                throw new Error('ikke authorisert');
+                throw new Error('Unauthorized');
             }
             if(payload.status > 500) {
-                console.log('server error');
-                throw new Error('Servor error!');
+                throw new Error('Servor Error!');
             }
-            throw new Error('Noe gikk galt!'); 
-        }
+            throw new Error('Something went wrong!'); 
+        },
     },
 
     actions: {
-        async fetchGeoCode(state) {
-            navigator.geolocation.getCurrentPosition(position => {
-                // const locationUrl = `http://api.openweathermap.org/data/2.5/weather?lati=${position.coords.latitude.toFixed(1)}&lon=${position.coords.longitude.toFixed(1)}&units=metric&appid=${client_id_key}`;
-                state.dispatch('fetchLocation', position);
+        // Function fetchGeoCode gives the current position data and dispatch (action) fetchCurrentLocation with payload position
+        async fetchGeoCode({ state, commit, dispatch }) {
+            navigator.geolocation.getCurrentPosition(position => { 
+                dispatch('fetchCurrentLocation', position);
             });
         },
-
-        async fetchLocation({ state, commit }, payload) {               //Destructuring helps to commit,state many times
-            const locationUrl = `http://api.openweathermap.org/data/2.5/weather?lat=${payload.coords.latitude.toFixed(1)}&lon=${payload.coords.longitude.toFixed(1)}&units=metric&appid=${client_id_key}`;
+        
+        // fetchCurrentLocation fetching data by latitude and longitude
+        async fetchCurrentLocation({ state, commit }, position) {               //Destucturing state, commit helps to use many commits and states in the (actions) function 
+            const locationUrl = `http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=${client_id_key}`;   
             try {
                 const responseLocation = await fetch(locationUrl, headers);
                 const locationOutput = await responseLocation.json();
 
+                //if status is ok (between >= 200 and < 300) go to the data handling function - commit (mutation) getLocation with payload (response)
                 if(responseLocation.status >= 200 && responseLocation.status < 300) { 
                     state.currentLocationWeather.error = '';
-                    commit('getLocation', locationOutput);
+                    state.currentWeatherVisible = true;
+                    commit('handleCurrentWeather', locationOutput);
                     return true;
-                } else {
-                    state.currentLocation = {};
+
+                // else go to the error handling function with the response - commit (mutation)
+                } else {  
                     commit('handleError', responseLocation); 
                 }
+            
+            //Catch - gets the message from handleError mutation
             } catch(error) {
                 state.currentLocationWeather.error = error.message;
-                console.log(error);
-            }
-            
-            
+            }    
         },
 
-        async fetchWeatherData({ state, commit }, place) {             //Destucturing state, commit
+        async fetchWeatherData({ state, commit }, place) {             //Destucturing state, commit helps to use many commits and states in the (actions) function 
             const weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${place}&units=metric&appid=${client_id_key}`;
             try {
                 const responseWeather = await fetch(weatherURL, headers);
@@ -107,19 +108,15 @@ export default {
                 }
 
             } catch (error) {
-                state.currentWeather.error = error.message;ªk
-                console.log(state.error);
+                state.currentWeather.error = error.message;
             }
         },
     },
 
     getters: {
         currentWeather: state => state.currentWeather,
-
         currentLocationWeather: state => state.currentLocationWeather,
-
-        // errorMessage: state => state.error,
-
+        currentWeatherVisible: state => state.currentWeatherVisible,
     },
 
 }
