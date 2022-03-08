@@ -1,7 +1,7 @@
 <template>
 	<section class="home">
-		<RouterLink :to="{ name:'home' }">
-			<Logo />
+		<RouterLink :to="{ name:'home' }" class="home__logo">
+			<img src="/images/svg/logo.svg" alt="weatherApp-logo-link-to-homePage">
 		</RouterLink>
 
 		<main class="home__pet-select">
@@ -18,7 +18,7 @@
 					<nav class="">
 						<!-- <button @click="catButton"> -->
 							<img :src="page.file" :alt="page.caption">
-							<h4>{{ page.title }}</h4>
+							<h5>{{ page.title }}</h5>
 						<!-- </button> -->
 					</nav>
 				</RouterLink>
@@ -28,12 +28,7 @@
 </template>
 
 <script>
-import Logo from '../components/Logo.vue';
 	export default {
-		components: {
-			Logo
-		},
-
 		data() {
 			return {
 				clientID: import.meta.env.VITE_APP_NAME
@@ -54,8 +49,12 @@ import Logo from '../components/Logo.vue';
 		/* position: relative; */
 	}
 
+	.home__logo img {
+		margin: 20px;
+	}
+
 	.home__pet-select {
-		min-height: 100vh;
+		margin: 20px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -72,7 +71,7 @@ import Logo from '../components/Logo.vue';
 	}
 
 	.home__pet-select-question img {
-		width: 9em;
+		width: 8em;
 	}
 
 	.home__pet-select-buttons {
@@ -80,10 +79,20 @@ import Logo from '../components/Logo.vue';
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		cursor: pointer;
+	}
+
+	.home__pet-select-buttons a {
+		text-decoration: none;
+		color: inherit;
 	}
 
 	.home__pet-select-buttons img {
-		width: 3.5em;
+		width: 2em;
+	}
+
+	.home__pet-select-buttons img:hover {
+		width: 3em;	
 	}
 
 	/* Medium screen devices (968px and above) */
@@ -94,6 +103,14 @@ import Logo from '../components/Logo.vue';
 
 		.home__pet-select-buttons {
 			width: 50%;
+		}
+
+		.home__pet-select-buttons img {
+			width: 3em;
+		}
+
+		.home__pet-select-buttons img:hover {
+			width: 4em;	
 		}
 
 	}
