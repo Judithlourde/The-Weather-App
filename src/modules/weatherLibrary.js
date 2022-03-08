@@ -100,6 +100,7 @@ export default {
 
                 if(responseWeather.status >= 200 && responseWeather.status < 300) {
                     state.currentWeather.error = '';
+                    
                     commit('handleWeatherData', weatherOutput); 
                     return true;
                 } else {
