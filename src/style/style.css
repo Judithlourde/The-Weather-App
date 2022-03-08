@@ -3,4 +3,9 @@ body {
 	color: var(--foreground);
 	font-size: var(--font-size);
 	font-family: var(--font-family);
+	background-image: url('/images/sun-rays.png'); 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* z-index: -9000; */
 }
