@@ -33,6 +33,7 @@ export default {
             state.currentLocationWeather.feelsLike = `${Math.round(payload.main.feels_like)}°C`;
             state.currentLocationWeather.icon = `https://openweathermap.org/img/wn/${payload.weather[0].icon}.png`;
             state.currentLocationWeather.description = payload.weather[0].description;
+            
         },
 
         handleWeatherData(state, payload) {
@@ -42,6 +43,9 @@ export default {
             state.currentWeather.feelsLike = `${Math.round(payload.main.feels_like)}°C`;
             state.currentWeather.icon = `https://openweathermap.org/img/wn/${payload.weather[0].icon}.png`;
             state.currentWeather.description = payload.weather[0].description;
+            localStorage.setItem('place', state.currentWeather.place);
+            const savedPlaced = localStorage.getItem('place')
+            console.log(savedPlaced)
         },
 
         // I have only one error handling mutation with payload for to different fetch data functions to avoid DRY code.  
@@ -64,6 +68,7 @@ export default {
         async fetchGeoCode({ state, commit, dispatch }) {
             navigator.geolocation.getCurrentPosition(position => { 
                 dispatch('fetchCurrentLocation', position);
+                console.log(position);
             });
         },
         

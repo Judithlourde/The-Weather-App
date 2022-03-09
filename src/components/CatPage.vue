@@ -8,9 +8,7 @@
                 <figcaption></figcaption>
             </figure>
 
-            <img class="cat-idea__cat-image" src="/images/svg/cat.svg" alt="cat-image"> 
-
-               
+            <img class="cat-idea__cat-image" src="/images/svg/cat.svg" alt="cat-image">        
         </div>
     </section>
 </template>
@@ -21,7 +19,6 @@ import Weather from './Weather.vue';
         components: {
             Weather,
         }
-    
     }
 </script>
 

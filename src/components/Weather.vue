@@ -63,6 +63,7 @@
         data() {
             return {  
                 isWeatherVisible: false, 
+                place: localStorage.getItem('place')
             }
         },
 
