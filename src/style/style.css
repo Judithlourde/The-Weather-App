@@ -3,7 +3,7 @@ body {
 	color: var(--foreground);
 	font-size: var(--font-size);
 	font-family: var(--font-family);
-	background-image: url('/images/sun-rays.png'); 
+	background-image: url('/images/rays-grey.png'); 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
