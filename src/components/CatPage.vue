@@ -3,9 +3,9 @@
         <Weather />
 
         <div class="cat-idea">
-            <figure>
+            <figure class="cat-idea__clouds">
                 <img src="/images/svg/cloud.svg" alt="">
-                <figcaption></figcaption>
+                <figcaption>{{ getWeatherStatus }}</figcaption>
             </figure>
 
             <img class="cat-idea__cat-image" src="/images/svg/cat.svg" alt="cat-image">        
@@ -18,6 +18,12 @@ import Weather from './Weather.vue';
     export default {
         components: {
             Weather,
+        },
+
+        computed: {
+            getWeatherStatus() {
+                return this.$store.getters.weatherStatus;
+            }
         }
     }
 </script>
@@ -40,10 +46,20 @@ import Weather from './Weather.vue';
         /* height: 300px; */
     }
 
-    .cat-idea figure img {
+    .cat-idea__clouds {
+        position: relative;
+    }
+
+    .cat-idea__clouds img {
         margin-left: 130px;
         margin-bottom: var(--bottom-small);
         width: 60%;
+    }
+
+    .cat-idea__clouds figcaption {
+        position: absolute;
+        bottom: 200px;
+        left: 200px;
     }
 
     .cat-idea > img {

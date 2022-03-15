@@ -11,6 +11,7 @@ export default {
                 feelsLike: '',
                 description: '',
                 icon: '',
+                // id: '',
                 error: '',
             },
             currentWeather: {
@@ -19,21 +20,37 @@ export default {
                 feelsLike: '',
                 description: '',
                 icon: '',
+                // id: '',
                 error: '',
             }, 
-            
+            weatherStatus: '',
             currentWeatherVisible: false,
         }
     },
 
     mutations: {
+        handleWeatherIcon(state, payload) {
+            if(payload.weather[0].id > 800) {
+                state.weatherStatus = 'Can we sleep extra today! 😴'
+            }
+            if(payload.weather[0].id === 800) {
+                state.weatherStatus = 'Can we go out today! 🍦'
+            }
+            if(payload.weather[0].id > 700) {
+                state.weatherStatus = 'Can drink a cup of tea! 🫖'
+            }
+            if(payload.weather[0].id >= 600 && payload.weather[0].id < 700) {
+                console.log(payload)
+                state.weatherStatus = `Don't forget to wear winter jakket! 🧥`
+            }
+        },
+
         handleCurrentWeather(state, payload) {
             state.currentLocationWeather.place = payload.name;
             state.currentLocationWeather.temprature = `${Math.round(payload.main.temp)}°C`;
             state.currentLocationWeather.feelsLike = `${Math.round(payload.main.feels_like)}°C`;
             state.currentLocationWeather.icon = `https://openweathermap.org/img/wn/${payload.weather[0].icon}.png`;
-            state.currentLocationWeather.description = payload.weather[0].description;
-            
+            state.currentLocationWeather.description = payload.weather[0].description;    
         },
 
         handleWeatherData(state, payload) {
@@ -43,6 +60,12 @@ export default {
             state.currentWeather.feelsLike = `${Math.round(payload.main.feels_like)}°C`;
             state.currentWeather.icon = `https://openweathermap.org/img/wn/${payload.weather[0].icon}.png`;
             state.currentWeather.description = payload.weather[0].description;
+            // state.currentWeather.id = payload.weather[0].id;
+
+            console.log(state.currentWeather.icon)
+            console.log(payload)
+
+            // Local storage for search place
             localStorage.setItem('place', state.currentWeather.place);
             const savedPlaced = localStorage.getItem('place')
             console.log(savedPlaced)
@@ -84,6 +107,7 @@ export default {
                     state.currentLocationWeather.error = '';
                     state.currentWeatherVisible = true;
                     commit('handleCurrentWeather', locationOutput);
+                    commit('handleWeatherIcon', locationOutput)
                     return true;
 
                 // else go to the error handling function with the response - commit (mutation)
@@ -123,6 +147,7 @@ export default {
         currentWeather: state => state.currentWeather,
         currentLocationWeather: state => state.currentLocationWeather,
         currentWeatherVisible: state => state.currentWeatherVisible,
+        weatherStatus: state => state.weatherStatus,
     },
 
 }
