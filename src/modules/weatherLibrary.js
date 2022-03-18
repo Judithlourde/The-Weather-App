@@ -11,7 +11,6 @@ export default {
                 feelsLike: '',
                 description: '',
                 icon: '',
-                // id: '',
                 error: '',
             },
             currentWeather: {
@@ -20,28 +19,53 @@ export default {
                 feelsLike: '',
                 description: '',
                 icon: '',
-                // id: '',
                 error: '',
             }, 
-            weatherStatus: '',
+            catIdeaStatus: '',
+            catIdeaImage: '',
             currentWeatherVisible: false,
         }
     },
 
     mutations: {
-        handleWeatherIcon(state, payload) {
+        catIdea(state, payload) {
             if(payload.weather[0].id > 800) {
-                state.weatherStatus = 'Can we sleep extra today! 😴'
+                state.catIdeaStatus = 'Can we sleep extra today! 😴';
+                state.catIdeaImage = '/images/cat_sleeping.jpg';
             }
+
             if(payload.weather[0].id === 800) {
-                state.weatherStatus = 'Can we go out today! 🍦'
+                state.catIdeaStatus = 'Can we go out today! 🍦';
+                state.catIdeaImage = '/images/cat_sunglass.jpg';
             }
-            if(payload.weather[0].id > 700) {
-                state.weatherStatus = 'Can drink a cup of tea! 🫖'
+
+            if(payload.weather[0].id > 700 && payload.weather[0].id < 799) {
+                state.catIdeaStatus = 'Can drink a cup of tea! 🫖';
+                state.catIdeaImage = '/images/cat_with_tea.jpg';
             }
+
             if(payload.weather[0].id >= 600 && payload.weather[0].id < 700) {
                 console.log(payload)
-                state.weatherStatus = `Don't forget to wear winter jakket! 🧥`
+                state.catIdeaStatus = `Don't forget to wear the winter jakket! 🧥`;
+                state.catIdeaImage = '/images/cat_in_snow.jpg';
+            }
+
+            if(payload.weather[0].id >= 500 && payload.weather[0].id < 599) {
+                console.log(payload)
+                state.catIdeaStatus = `Don't forget umbrella today!`;
+                state.catIdeaImage = '/images/cat_umbrella.jpg';
+            }
+
+            if(payload.weather[0].id >= 300 && payload.weather[0].id < 399) {
+                console.log(payload)
+                state.catIdeaStatus = `Can we drink soup today?`;
+                state.catIdeaImage = '/images/soup.jpg';
+            }
+
+            if(payload.weather[0].id >= 200 && payload.weather[0].id < 299) {
+                console.log(payload)
+                state.catIdeaStatus= `Don't forget wear rain coat and boots`;
+                state.catIdeaImage = '/images/rain_boots.jpg';
             }
         },
 
@@ -92,6 +116,7 @@ export default {
             navigator.geolocation.getCurrentPosition(position => { 
                 dispatch('fetchCurrentLocation', position);
                 console.log(position);
+                // (method) Geolocation.getCurrentPosition(successCallback: PositionCallback, errorCallback?: PositionErrorCallback, options?: PositionOptions
             });
         },
         
@@ -107,7 +132,7 @@ export default {
                     state.currentLocationWeather.error = '';
                     state.currentWeatherVisible = true;
                     commit('handleCurrentWeather', locationOutput);
-                    commit('handleWeatherIcon', locationOutput)
+                    commit('catIdea', locationOutput)
                     return true;
 
                 // else go to the error handling function with the response - commit (mutation)
@@ -147,7 +172,8 @@ export default {
         currentWeather: state => state.currentWeather,
         currentLocationWeather: state => state.currentLocationWeather,
         currentWeatherVisible: state => state.currentWeatherVisible,
-        weatherStatus: state => state.weatherStatus,
+        catIdeaStatus: state => state.catIdeaStatus,
+        catIdeaImage: state => state.catIdeaImage,
     },
 
 }

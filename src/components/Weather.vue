@@ -72,6 +72,11 @@
             this.$store.dispatch('fetchGeoCode');
         },
 
+        created() {
+            // When the app is created it calls the async function fetchGeoCode, it helps when the build server runs
+            this.$store.dispatch('fetchGeoCode');
+        },
+
         computed: {
             getWeather() {
                 return this.$store.getters.currentWeather;
@@ -111,6 +116,7 @@
         margin: 20px;
     }
     .weather-header__logo {
+        margin: 10px;
         grid-column: 1/ span 3;
         margin-top: var(--top-xsmall);
     }
@@ -157,6 +163,7 @@
     .weather__main-weather {
         background: var(--highlight);
         padding: 20px;
+        margin: 10px;
         border-radius: 25px;
         width: 350px;
         height: 150px;
@@ -205,10 +212,11 @@
         .weather-header__logo {
             grid-column: 1/ span 3;
             width: 100px;
+            margin: 0 20px;
         }
 
         .weather-header__search-weather {
-            grid-column: 4/ span 5;
+            grid-column: 5/ span 4;
         }
 
         .weather-header__search-weather input {

@@ -2,14 +2,27 @@
     <section class="cat-page">
         <Weather />
 
-        <div class="cat-idea">
-            <figure class="cat-idea__clouds">
+        <!-- <div class="dog-idea">
+            <figure>
                 <img src="/images/svg/cloud.svg" alt="">
-                <figcaption>{{ getWeatherStatus }}</figcaption>
+                <figcaption></figcaption>
             </figure>
 
-            <img class="cat-idea__cat-image" src="/images/svg/cat.svg" alt="cat-image">        
-        </div>
+            <img class="dog-idea__cat-image" src="/images/svg/dog.svg" alt="dog-image"> 
+       
+        </div> -->
+
+        <section class="cat-idea">
+            <div class="cat-idea__text">
+                <p>{{ getCatIdeaStatus }}</p>
+                <img :src="getCatIdeaImage" alt="">
+            </div>
+
+            <figure>
+                <img class="cat-idea__cat-image" src="/images/svg/cat.svg" alt="cat-image">  
+                <!-- <img class="cat-idea__cloud-image" src="/images/svg/cloud.svg" alt="thinking-cloud-image"> -->
+            </figure>        
+        </section>
     </section>
 </template>
 
@@ -21,62 +34,81 @@ import Weather from './Weather.vue';
         },
 
         computed: {
-            getWeatherStatus() {
-                return this.$store.getters.weatherStatus;
+            getCatIdeaStatus() {
+                return this.$store.getters.catIdeaStatus;
+            },
+
+            getCatIdeaImage() {
+                return this.$store.getters.catIdeaImage;
             }
+
+
         }
     }
 </script>
 
 <style>
     .cat-page {
-        max-width: 100vw;
-        max-height: 100vh;
         display: flex;
         flex-direction: column;
+        align-items: center;
     }
 
     .cat-idea {
-        margin-top: var(--top-small);
+        /* background-color: var(--highlight); */
+        padding: 20px;
+        border-radius: 25px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
+        justify-content: space-between;
+        margin: 40px 20px 20px 20px;
+        height: 300px;
+    }
+
+    .cat-idea figure {
+        display: flex;
+    }
+
+    .cat-idea figure img {
+        width: 150px;
+    }
+
+    .cat-idea__cloud-image {
+        width: 20px;
+    }
+
+    .cat-idea__text {
+        background-image: url('/images/svg/cloud.svg');
+        background-repeat: no-repeat;
+        background-size: cover;
         width: 100%;
-        /* height: 300px; */
+        /* height: 100%; */
+        display: flex;
     }
 
-    .cat-idea__clouds {
-        position: relative;
-    }
-
-    .cat-idea__clouds img {
-        margin-left: 130px;
-        margin-bottom: var(--bottom-small);
-        width: 60%;
-    }
-
-    .cat-idea__clouds figcaption {
-        position: absolute;
-        bottom: 200px;
-        left: 200px;
-    }
-
-    .cat-idea > img {
-        margin-right: 100px;
-        width: 40%;
+    .cat-idea__text img {
+        width: 50px;
+        border-radius: 100%;
     }
 
     /* Medium screen devices (768px and above) */
     @media screen and (min-width: 768px) {
         .cat-idea {
+            margin: 50px;
             flex-direction: row;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
         } 
         
-        .cat-idea > img {
-            margin-right: 100px;
-            width: 20%;
+        .cat-idea__text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cat-idea__tips img {
+            width: 100%;
         }
 
     }
