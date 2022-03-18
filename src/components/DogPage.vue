@@ -3,13 +3,12 @@
         <Weather />
 
         <div class="dog-idea">
+            <img class="dog-idea__cat-image" src="/images/svg/dog.svg" alt="dog-image"> 
+
             <figure>
                 <img src="/images/svg/cloud.svg" alt="">
-                <figcaption></figcaption>
+                <figcaption>{{ getCatIdeaStatus }}</figcaption>
             </figure>
-
-            <img class="dog-idea__cat-image" src="/images/svg/dog.svg" alt="dog-image"> 
-       
         </div>
     </section>
 </template>
@@ -19,6 +18,17 @@ import Weather from './Weather.vue';
     export default {
         components: {
             Weather,
+        },
+
+        computed: {
+            getCatIdeaStatus() {
+                return this.$store.getters.catIdeaStatus;
+            },
+
+            getCatIdeaImage() {
+                return this.$store.getters.catIdeaImage;
+            }
+
         }
     
     }
@@ -33,23 +43,33 @@ import Weather from './Weather.vue';
     }
 
     .dog-idea {
-        /* margin-top: var(--top-small); */
+        margin-top: var(--top-xsmall);
         display: flex;
-        flex-direction: column;
-        /* justify-content: space-between; */
+        flex-direction: column-reverse;
         align-items: center;
         width: 100%;
         /* height: 200px; */
     }
 
+    .dog-idea figure {
+        position: relative;
+    }
+    
     .dog-idea figure img {
         margin-left: 130px;
         margin-bottom: var(--bottom-xsmall);
         width: 60%;
+        
+    }
+
+    .dog-idea figure figcaption {
+        position: absolute;
+        left: 180px;
+        bottom: 130px;
     }
 
     .dog-idea > img {
-        margin-right: 100px;
+        margin-right: 140px;
         width: 30%;
     }
 

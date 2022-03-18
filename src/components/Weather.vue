@@ -20,7 +20,7 @@
             <div class="weather__main-weather">
                 <div>
                     <div class="spinner" :class="{spinnerVisible: !visible}">Loading...
-                        <img src="/images/gif/clouds.gif" alt="clouds moving gif">
+                        <img src="/images/gif/clouds.gif" alt="moving clouds gif">
                     </div>
 
                     <div class="currentWeather" :class="{currentWeatherData: visible}">
@@ -116,7 +116,7 @@
         margin: 20px;
     }
     .weather-header__logo {
-        margin: 10px;
+        /* margin: 1px; */
         grid-column: 1/ span 3;
         margin-top: var(--top-xsmall);
     }
@@ -131,7 +131,7 @@
         width: 100%;
         align-items: center;
         justify-content: center;
-        padding: 5px;
+        /* padding: 5px; */
         margin: 20px;
         background: var(--highlight);
         border-radius: 22px;
@@ -147,7 +147,8 @@
     }
 
     .weather-header__search-weather button img {
-        width: 1.6em;
+        padding: 5px;
+        width: 1.5em;
     }
 
     .weather-main {
@@ -163,37 +164,15 @@
     .weather__main-weather {
         background: var(--highlight);
         padding: 20px;
-        margin: 10px;
+        margin: 0 10px;
         border-radius: 25px;
         width: 350px;
-        height: 150px;
+        height: 170px;
         display: flex;
         /* flex-direction: column; */
         justify-content: space-between;
         /* text-align: left; */
     }
-    .weather__main-catIdea {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 10px;
-    }
-    
-    .weather__main-catIdea img {
-        width: 50%;
-    }
-
-    .weather__main-catIdea-cat {
-        padding: 10px;
-    }
-
-    /* .cat-page__main-catIdea figure {
-        margin: 10px;
-    }
-
-    .cat-page__main-catIdea figure img {
-        margin-right: 50px;
-    } */
 
     .weather__display,
     .spinner,

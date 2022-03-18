@@ -62,7 +62,6 @@ import Weather from './Weather.vue';
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        margin: 40px 20px 20px 20px;
         height: 300px;
     }
 

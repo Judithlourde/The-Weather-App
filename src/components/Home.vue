@@ -71,7 +71,7 @@
 	}
 
 	.home__pet-select-question img {
-		width: 8em;
+		width: 9em;
 	}
 
 	.home__pet-select-buttons {
@@ -88,7 +88,8 @@
 	}
 
 	.home__pet-select-buttons img {
-		width: 2em;
+		margin-top: var(--top-medium);
+		width: 2.5em;
 	}
 
 	.home__pet-select-buttons img:hover {
