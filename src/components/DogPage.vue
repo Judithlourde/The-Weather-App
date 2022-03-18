@@ -33,13 +33,13 @@ import Weather from './Weather.vue';
     }
 
     .dog-idea {
-        margin-top: var(--top-small);
+        /* margin-top: var(--top-small); */
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        /* justify-content: space-between; */
         align-items: center;
         width: 100%;
-        /* height: 300px; */
+        /* height: 200px; */
     }
 
     .dog-idea figure img {

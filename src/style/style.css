@@ -7,5 +7,5 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    /* z-index: -9000; */
+	height: 100vh;
 }
