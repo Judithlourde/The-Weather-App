@@ -30,23 +30,23 @@ export default {
     mutations: {
         catIdea(state, payload) {
             if(payload.weather[0].id > 800) {
-                state.catIdeaStatus = 'Can we sleep extra today! 😴';
+                state.catIdeaStatus = 'Can we sleep extra today!';
                 state.catIdeaImage = '/images/cat_sleeping.jpg';
             }
 
             if(payload.weather[0].id === 800) {
-                state.catIdeaStatus = 'Can we go out today! 🍦';
+                state.catIdeaStatus = 'Can we go out today!';
                 state.catIdeaImage = '/images/cat_sunglass.jpg';
             }
 
             if(payload.weather[0].id > 700 && payload.weather[0].id < 799) {
-                state.catIdeaStatus = 'Can drink a cup of tea! 🫖';
+                state.catIdeaStatus = 'Can drink a cup of tea!';
                 state.catIdeaImage = '/images/cat_with_tea.jpg';
             }
 
             if(payload.weather[0].id >= 600 && payload.weather[0].id < 700) {
                 console.log(payload)
-                state.catIdeaStatus = `Don't forget to wear the winter jakket! 🧥`;
+                state.catIdeaStatus = `Don't forget to wear the winter jakket!`;
                 state.catIdeaImage = '/images/cat_in_snow.jpg';
             }
 
