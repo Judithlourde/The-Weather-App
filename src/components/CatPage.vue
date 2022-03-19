@@ -86,7 +86,31 @@ import Weather from './Weather.vue';
     .cat-idea > img {
         margin-right: 140px;
         width: 40%;
+        animation-name: transformIt; /* It refers to line 141 name som used in keyframes */
+        animation-duration: 2s;
+        animation-delay: 0.02s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: 1; 
     }
+
+    @keyframes transformIt { 
+        from {
+            transform: translateY(-100px);
+        }
+
+        50% {
+            transform: translate(50px);
+        }
+
+        75% {
+            transform: rotate(30deg);
+        }
+
+        110% {
+            transform: translate(-100px);
+        }
+    }
+    
 
     /* Medium screen devices (768px and above) */
     @media screen and (min-width: 768px) {

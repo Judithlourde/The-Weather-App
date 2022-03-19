@@ -9,7 +9,6 @@
                 <img src="/images/svg/cloud.svg" alt="Thinking-clould-image">
 
                 <figcaption>
-                    <!-- <img :src="getCatIdeaImage" alt=""> -->
                     <p>{{ activities }}</p>
                 </figcaption>
             </figure>
@@ -116,7 +115,7 @@ import Weather from './Weather.vue';
         position: absolute;
         left: 200px;
         right: 60px;
-        bottom: 120px;
+        bottom: 130px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -131,9 +130,31 @@ import Weather from './Weather.vue';
 
     .dog-idea > img {
         margin-right: 140px;
-        width: 30%;
+        width: 28%;
+        animation-name: transformIt; /* It refers to line 141 name som used in keyframes */
+        animation-duration: 2s;
+        animation-delay: 0.02s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: 1; 
     }
 
+    @keyframes transformIt { 
+        from {
+            transform: translateY(-100px);
+        }
+
+        50% {
+            transform: translate(50px);
+        }
+
+        75% {
+            transform: rotate(30deg);
+        }
+
+        110% {
+            transform: translate(-100px);
+        }
+    }
     /* Medium screen devices (768px and above) */
     @media screen and (min-width: 768px) {
         .dog-idea {
@@ -167,7 +188,7 @@ import Weather from './Weather.vue';
 
         .dog-idea > img {
             margin-right: 10px;
-            width: 15%;
+            width: 13%;
         }
 
     }
