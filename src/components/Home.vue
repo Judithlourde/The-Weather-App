@@ -46,11 +46,17 @@
 
 <style>
 	.home {
+		background-image: url('/images/rays-grey.png'); 
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		height: 100vh;
 		/* position: relative; */
 	}
 
 	.home__logo img {
-		margin: 20px;
+		margin: 30px 10px;
+		width: 24%;
 	}
 
 	.home__pet-select {
@@ -98,8 +104,17 @@
 
 	/* Medium screen devices (968px and above) */
     @media screen and (min-width: 968px) {
+		.home__logo img {
+			margin: 20px 26px;
+			width: 7.2%;
+		}
+
 		.home__pet-select-question {
 			font-size: var(--heading);
+		}
+
+		.home__pet-select-question > * {
+			padding: var(--padding-medium);
 		}
 
 		.home__pet-select-buttons {

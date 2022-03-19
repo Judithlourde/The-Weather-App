@@ -3,6 +3,7 @@
         <header class="weather-header">
             <RouterLink :to="{ name:'home' }" class="weather-header__logo">
                 <img src="/images/svg/logo.svg" alt="weatherApp-logo-link-to-homePage">
+                <h6>Home</h6>
             </RouterLink>  
 
             <div class="weather-header__search-weather" role="search">
@@ -54,12 +55,7 @@
 </template>
 
 <script>
-// import Header from './Header.vue';
     export default {
-        components: {
-			
-		},
-
         data() {
             return {  
                 isWeatherVisible: false, 
@@ -113,12 +109,20 @@
         grid-template-columns: var(--grid-column-12);
         width: 100vw;
         gap: var(--gap-small);
-        margin: 20px;
+        margin: 20px 10px;
     }
     .weather-header__logo {
-        /* margin: 1px; */
         grid-column: 1/ span 3;
         margin-top: var(--top-xsmall);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .weather-header__logo {
+        color: black;
+        text-decoration: none;
+        font-family: 'Henny Penny', cursive;
     }
 
     .weather-header__logo img {
@@ -184,6 +188,8 @@
     .spinnerVisible,
     .weatherData {
         display: block;
+        /* padding: 10px; */
+        /* margin: 10px; */
     } 
 
     /* Medium screen devices (968px and above) */
@@ -195,7 +201,7 @@
         }
 
         .weather-header__search-weather {
-            grid-column: 5/ span 4;
+            grid-column: 4/ span 5;
         }
 
         .weather-header__search-weather input {
@@ -204,11 +210,19 @@
 
         .weather__main-weather {
             width: 450px;
-            height: 170px;
+            height: 220px;
             display: flex;
             /* flex-direction: column; */
             justify-content: space-evenly;
             text-align: left;
         }
+
+        .currentWeatherData,
+        .spinnerVisible,
+        .weatherData {
+            display: block;
+            padding: 10px;
+            margin: 10px;
+        } 
     }
 </style>
