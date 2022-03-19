@@ -29,12 +29,12 @@ export default {
 
     mutations: {
         catIdea(state, payload) {
-            if(payload.weather[0].id > 800) {
+            if(payload.weather[0].id === 804) {
                 state.catIdeaStatus = 'Can we sleep extra today!';
                 state.catIdeaImage = '/images/cat_sleeping.jpg';
             }
 
-            if(payload.weather[0].id === 800) {
+            if(payload.weather[0].id === 800 || payload.weather[0].id <= 803) {
                 state.catIdeaStatus = 'Can we go out today!';
                 state.catIdeaImage = '/images/cat_sunglass.jpg';
             }
@@ -84,15 +84,11 @@ export default {
             state.currentWeather.feelsLike = `${Math.round(payload.main.feels_like)}°C`;
             state.currentWeather.icon = `https://openweathermap.org/img/wn/${payload.weather[0].icon}.png`;
             state.currentWeather.description = payload.weather[0].description;
-            // state.currentWeather.id = payload.weather[0].id;
-
-            console.log(state.currentWeather.icon)
-            console.log(payload)
 
             // Local storage for search place
-            localStorage.setItem('place', state.currentWeather.place);
-            const savedPlaced = localStorage.getItem('place')
-            console.log(savedPlaced)
+        //     localStorage.setItem('place', state.currentWeather.place);
+        //     const savedPlaced = localStorage.getItem('place')
+        //     console.log(savedPlaced)
         },
 
         // I have only one error handling mutation with payload for to different fetch data functions to avoid DRY code.  
