@@ -2,27 +2,18 @@
     <section class="cat-page">
         <Weather />
 
-        <!-- <div class="dog-idea">
+        <div class="cat-idea">
+            <img class="cat-idea__cat-image" src="/images/svg/cat.svg" alt="cat-image">
+
             <figure>
-                <img src="/images/svg/cloud.svg" alt="">
-                <figcaption></figcaption>
+                <img src="/images/svg/cloud.svg" alt="Thinking-clould-image">
+
+                <figcaption>
+                    <img :src="getCatIdeaImage" alt="">
+                    <p>{{ getCatIdeaStatus }}</p>
+                </figcaption>
             </figure>
-
-            <img class="dog-idea__cat-image" src="/images/svg/dog.svg" alt="dog-image"> 
-       
-        </div> -->
-
-        <section class="cat-idea">
-            <div class="cat-idea__text">
-                <p>{{ getCatIdeaStatus }}</p>
-                <img :src="getCatIdeaImage" alt="">
-            </div>
-
-            <figure>
-                <img class="cat-idea__cat-image" src="/images/svg/cat.svg" alt="cat-image">  
-                <!-- <img class="cat-idea__cloud-image" src="/images/svg/cloud.svg" alt="thinking-cloud-image"> -->
-            </figure>        
-        </section>
+        </div>
     </section>
 </template>
 
@@ -42,72 +33,95 @@ import Weather from './Weather.vue';
                 return this.$store.getters.catIdeaImage;
             }
 
-
         }
+
     }
 </script>
 
 <style>
     .cat-page {
+        max-width: 100vw;
+        max-height: 100vh;
         display: flex;
         flex-direction: column;
-        align-items: center;
     }
 
     .cat-idea {
-        /* background-color: var(--highlight); */
-        padding: 20px;
-        border-radius: 25px;
+        margin-top: var(--top-xsmall);
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         align-items: center;
-        justify-content: space-between;
-        height: 300px;
+        width: 100%;
     }
 
     .cat-idea figure {
-        display: flex;
+        position: relative;
     }
 
     .cat-idea figure img {
-        width: 150px;
+        margin-left: 130px;
+        margin-bottom: var(--bottom-xsmall);
+        width: 60%;
+
     }
 
-    .cat-idea__cloud-image {
-        width: 20px;
-    }
-
-    .cat-idea__text {
-        background-image: url('/images/svg/cloud.svg');
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 100%;
-        /* height: 100%; */
+    .cat-idea figure figcaption {
+        font-size: var(--body);
+        position: absolute;
+        left: 150px;
+        right: 60px;
+        bottom: 135px;
         display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 35%;
     }
 
-    .cat-idea__text img {
-        width: 50px;
+    .cat-idea figure figcaption img {
         border-radius: 100%;
+        width: 32%;
+    }
+
+    .cat-idea > img {
+        margin-right: 140px;
+        width: 40%;
     }
 
     /* Medium screen devices (768px and above) */
     @media screen and (min-width: 768px) {
         .cat-idea {
-            margin: 50px;
             flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-        } 
-        
-        .cat-idea__text {
-            display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
         }
 
-        .cat-idea__tips img {
-            width: 100%;
+        .cat-idea figure img {
+            margin-left: 10px;
+            margin-bottom: var(--bottom-xsmall);
+            width: 85%;
+        }
+
+        .cat-idea figure figcaption {
+            left: 100px;
+            right: 0;
+            bottom: 210px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            width: 40%;
+            font-size: var(--highlight);
+        }
+
+        .cat-idea figure figcaption img {
+            border-radius: 100%;
+            width: 50%;
+        }
+
+        .cat-idea > img {
+            margin-right: 10px;
+            width: 15%;
         }
 
     }
