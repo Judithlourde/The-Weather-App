@@ -9,6 +9,8 @@
                 <img src="/images/svg/cloud.svg" alt="Thinking-clould-image">
 
                 <figcaption>
+                    <p>Today's Activity?</p>
+                   
                     <p>{{ activities }}</p>
                 </figcaption>
             </figure>
@@ -121,6 +123,10 @@ import Weather from './Weather.vue';
         align-items: center;
         justify-content: center;
         width: 35%;
+    }
+
+    .dog-idea figure figcaption > * {
+        padding: 5px 0;
     }
 
     .dog-idea figure figcaption img {
