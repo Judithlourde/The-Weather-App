@@ -28,19 +28,20 @@ export default {
     },
 
     mutations: {
+        // CatIdea function gives the ideas and images depends upon the weather condition
         catIdea(state, payload) {
             if(payload.weather[0].id === 804) {
-                state.catIdeaStatus = 'Can we sleep extra today!';
+                state.catIdeaStatus = 'Can we sleep extra today?';
                 state.catIdeaImage = '/images/cat_sleeping.jpg';
             }
 
             if(payload.weather[0].id === 800 || payload.weather[0].id <= 803) {
-                state.catIdeaStatus = 'Can we go out today!';
+                state.catIdeaStatus = 'Can we go out today?';
                 state.catIdeaImage = '/images/cat_sunglass.jpg';
             }
 
             if(payload.weather[0].id > 700 && payload.weather[0].id < 799) {
-                state.catIdeaStatus = 'Can drink a cup of tea!';
+                state.catIdeaStatus = 'Canwe drink a cup of tea?';
                 state.catIdeaImage = '/images/cat_with_tea.jpg';
             }
 
@@ -70,6 +71,7 @@ export default {
         },
 
         handleCurrentWeather(state, payload) {
+            state.currentWeather.place = ''         // To avoid repeating the place in state when change the page from cat to dog or dog to cat
             state.currentLocationWeather.place = payload.name;
             state.currentLocationWeather.temprature = `${Math.round(payload.main.temp)}°C`;
             state.currentLocationWeather.feelsLike = `${Math.round(payload.main.feels_like)}°C`;
@@ -79,6 +81,7 @@ export default {
 
         handleWeatherData(state, payload) {
             // state.error = '';
+            // state.currentWeather = {};
             state.currentWeather.place = payload.name;
             state.currentWeather.temprature = `${Math.round(payload.main.temp)}°C`;
             state.currentWeather.feelsLike = `${Math.round(payload.main.feels_like)}°C`;
@@ -86,9 +89,8 @@ export default {
             state.currentWeather.description = payload.weather[0].description;
 
             // Local storage for search place
-        //     localStorage.setItem('place', state.currentWeather.place);
-        //     const savedPlaced = localStorage.getItem('place')
-        //     console.log(savedPlaced)
+            localStorage.setItem('place', state.currentWeather.place);
+            const savedPlaced = localStorage.getItem('place');
         },
 
         // I have only one error handling mutation with payload for to different fetch data functions to avoid DRY code.  
@@ -142,7 +144,8 @@ export default {
             }    
         },
 
-        async fetchWeatherData({ state, commit }, place) {             //Destucturing state, commit helps to use many commits and states in the (actions) function 
+        //Destucturing state, commit helps to use many commits and states in the (actions) function 
+        async fetchWeatherData({ state, commit }, place) {            
             const weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${place}&units=metric&appid=${client_id_key}`;
             try {
                 const responseWeather = await fetch(weatherURL, headers);
@@ -150,7 +153,9 @@ export default {
 
                 if(responseWeather.status >= 200 && responseWeather.status < 300) {
                     state.currentWeather.error = '';
-                    
+                    // state.currentWeather = {};
+                    console.log(weatherOutput)
+                    console.log(state.currentWeather.place)
                     commit('handleWeatherData', weatherOutput); 
                     return true;
                 } else {
