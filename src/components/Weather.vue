@@ -7,10 +7,10 @@
             </RouterLink>  
 
             <div class="weather-header__search-weather" role="search">
-                <button>
+                <!-- <button> -->
                     <!-- dispatch calling the actions in modules and sending the place (payload) -->
                     <img @click="this.$store.dispatch('fetchWeatherData', this.place); weatherDisplay()" src="/images/svg/search.svg" alt="Search-icon">
-                </button>
+                <!-- </button> -->
 
                 <!-- dispatch calling the actions in modules and sending the place (payload) -->
                 <input type="text" placeholder="Enter your place..." v-model="place" @keyup.enter="this.$store.dispatch('fetchWeatherData', this.place); weatherDisplay()">
@@ -150,7 +150,7 @@
         cursor: pointer;
     }
 
-    .weather-header__search-weather button img {
+    .weather-header__search-weather img {
         padding: 5px;
         width: 1.5em;
     }
