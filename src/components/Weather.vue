@@ -65,7 +65,7 @@
 
         mounted() { 
             // Calling the fetchGeoCode when the page mounted because it is a async function
-            this.$store.dispatch('fetchGeoCode');
+            // this.$store.dispatch('fetchGeoCode');
         },
 
         created() {
