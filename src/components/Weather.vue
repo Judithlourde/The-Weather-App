@@ -70,7 +70,7 @@
 
         created() {
             // When the app is created it calls the async function fetchGeoCode, it helps when the build server runs
-            // this.$store.dispatch('fetchGeoCode');
+            this.$store.dispatch('fetchGeoCode');
         },
 
         computed: {
