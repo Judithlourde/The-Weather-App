@@ -120,7 +120,7 @@ export default {
         
         // fetchCurrentLocation fetching data by latitude and longitude
         async fetchCurrentLocation({ state, commit }, position) {               //Destucturing state, commit helps to use many commits and states in the (actions) function 
-            const locationUrl = `http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=${client_id_key}`;   
+            const locationUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=${client_id_key}`;   
             try {
                 const responseLocation = await fetch(locationUrl, headers);
                 const locationOutput = await responseLocation.json();
