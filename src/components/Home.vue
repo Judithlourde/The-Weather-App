@@ -16,10 +16,10 @@
 			<div class="home__pet-select-buttons">
 				<RouterLink v-for="page in pagesFromStore" :key="page.id" :to="{ name: 'page', params: { page_id: page.id } }">
 					<nav class="">
-						<!-- <button @click="catButton"> -->
+						<button>
 							<img :src="page.file" :alt="page.caption">
 							<h5>{{ page.title }}</h5>
-						<!-- </button> -->
+						</button>
 					</nav>
 				</RouterLink>
 			</div>
@@ -31,7 +31,6 @@
 	export default {
 		data() {
 			return {
-				clientID: import.meta.env.VITE_APP_NAME
 			}
 			
 		},
