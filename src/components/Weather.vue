@@ -7,13 +7,13 @@
             </RouterLink>  
 
             <div class="weather-header__search-weather" role="search">
-                <!-- <button> -->
+                <button>
                     <!-- dispatch calling the actions in modules and sending the place (payload) -->
                     <img @click="this.$store.dispatch('fetchWeatherData', this.place); weatherDisplay()" src="/images/svg/search.svg" alt="Search-icon">
-                <!-- </button> -->
+                </button>
 
                 <!-- dispatch calling the actions in modules and sending the place (payload) -->
-                <input type="text" placeholder="Enter your place..." v-model="place" @keyup.enter="this.$store.dispatch('fetchWeatherData', this.place); weatherDisplay()">
+                <input type="text" placeholder="Enter your place... and press enter or press the search icon" v-model="place" @keyup.enter="this.$store.dispatch('fetchWeatherData', this.place); weatherDisplay()">
             </div> 
         </header>
 
@@ -61,11 +61,6 @@
                 isWeatherVisible: false, 
                 place: localStorage.getItem('place')
             }
-        },
-
-        mounted() { 
-            // Calling the fetchGeoCode when the page mounted because it is a async function
-            // this.$store.dispatch('fetchGeoCode');
         },
 
         created() {
