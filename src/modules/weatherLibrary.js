@@ -50,25 +50,21 @@ export default {
             }
 
             if(payload.weather[0].id >= 600 && payload.weather[0].id < 700) {
-                console.log(payload)
                 state.catIdeaStatus = `Don't forget to wear the winter jakket!`;
                 state.catIdeaImage = '/images/cat_in_snow.jpg';
             }
 
             if(payload.weather[0].id >= 500 && payload.weather[0].id < 599) {
-                console.log(payload)
                 state.catIdeaStatus = `Don't forget umbrella today!`;
                 state.catIdeaImage = '/images/cat_umbrella.jpg';
             }
 
             if(payload.weather[0].id >= 300 && payload.weather[0].id < 399) {
-                console.log(payload)
                 state.catIdeaStatus = `Can we drink soup today?`;
                 state.catIdeaImage = '/images/soup.jpg';
             }
 
             if(payload.weather[0].id >= 200 && payload.weather[0].id < 299) {
-                console.log(payload)
                 state.catIdeaStatus= `Don't forget wear rain coat and boots`;
                 state.catIdeaImage = '/images/rain_boots.jpg';
             }
@@ -117,14 +113,15 @@ export default {
         async fetchGeoCode({ state, commit, dispatch }) {
             navigator.geolocation.getCurrentPosition(position => { 
                 dispatch('fetchCurrentLocation', position);
-                console.log(position);
                 // (method) Geolocation.getCurrentPosition(successCallback: PositionCallback, errorCallback?: PositionErrorCallback, options?: PositionOptions
             });
         },
         
         // fetchCurrentLocation fetching data by latitude and longitude
         async fetchCurrentLocation({ state, commit }, position) {  
-                         //Destucturing state, commit helps to use many commits and states in the (actions) function 
+                        //Destucturing state, commit helps to use many commits and states in the (actions) function 
+
+                        // Note, I have put api key here, because netlify not recognise env file 
             const locationUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=${'22472f42832eb6d9fd13004d1fb61926'}`; 
 
             try {
@@ -151,7 +148,8 @@ export default {
         },
 
         //Destucturing state, commit helps to use many commits and states in the (actions) function 
-        async fetchWeatherData({ state, commit }, place) {            
+        async fetchWeatherData({ state, commit }, place) { 
+            // Note, I have put api key here, because netlify not recognise env file            
             const weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${place}&units=metric&appid=${'22472f42832eb6d9fd13004d1fb61926'}`;
             try {
                 const responseWeather = await fetch(weatherURL, headers);
@@ -160,8 +158,6 @@ export default {
                 if(responseWeather.status >= 200 && responseWeather.status < 300) {
                     state.currentWeather.error = '';
                     // state.currentWeather = {};
-                    console.log(weatherOutput)
-                    console.log(state.currentWeather.place)
                     commit('handleWeatherData', weatherOutput); 
                     return true;
                 } else {
