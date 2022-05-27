@@ -43,17 +43,13 @@ import Weather from './Weather.vue';
 					await this.handleBoredResponse(boredResponse);
 				} catch (error) {
 					this.error = error.message;
-				}
-                
+				}    
             },
 
             async handleBoredResponse(boredResponse) {
-                // console.log(response);
                 if(boredResponse.status >= 200 && boredResponse.status < 300) {
-                    console.log('ok');
                     const activities = await boredResponse.json();
                     this.activities = activities.activity;
-                    console.log(this.activities)
 					return true;
 
                 } else {
