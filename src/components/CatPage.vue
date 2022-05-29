@@ -9,7 +9,7 @@
                 <img src="/images/svg/cloud.svg" alt="Thinking-clould-image">
 
                 <figcaption>
-                    <img :src="getCatIdeaImage" alt="">
+                    <img :src="getCatIdeaImage" alt="cat idea background thinking image">
                     <p>{{ getCatIdeaStatus }}</p>
                 </figcaption>
             </figure>

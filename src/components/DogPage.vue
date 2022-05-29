@@ -6,7 +6,7 @@
             <img class="dog-idea__dog-image" src="/images/svg/dog.svg" alt="dog-image">
 
             <figure>
-                <img src="/images/svg/cloud.svg" alt="Thinking-clould-image">
+                <img src="/images/svg/cloud.svg" alt="dog idea background thinking image">
 
                 <figcaption>
                     <p>Today's Activity?</p>
