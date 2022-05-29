@@ -1,13 +1,13 @@
 <template>
     <section class="weather">
-        <header class="weather-header">
-            <RouterLink :to="{ name:'home' }" class="weather-header__logo">
+        <header role="header" class="weather-header">
+            <RouterLink aria-label="link to home" :to="{ name:'home' }" class="weather-header__logo">
                 <img src="/images/svg/logo.svg" alt="weatherApp-logo-link-to-homePage">
                 <h6>Home</h6>
             </RouterLink>  
 
             <div class="weather-header__search-weather" role="search">
-                <button>
+                <button aria-label="search weather">
                     <!-- dispatch calling the actions in modules and sending the place (payload) -->
                     <img @click="this.$store.dispatch('fetchWeatherData', this.place); weatherDisplay()" src="/images/svg/search.svg" alt="Search-icon">
                 </button>
@@ -17,7 +17,7 @@
             </div> 
         </header>
 
-        <main class="weather-main">
+        <main role="main" class="weather-main">
             <div class="weather__main-weather">
                 <div>
                     <div class="spinner" :class="{spinnerVisible: !visible}">Loading...
@@ -48,8 +48,6 @@
                     <h6>{{ getWeather.error }}</h6>
                 </div>
             </div>
-
-           
         </main> 
     </section>
 </template>
@@ -130,7 +128,6 @@
         width: 100%;
         align-items: center;
         justify-content: center;
-        /* padding: 5px; */
         margin: 20px;
         background: var(--highlight);
         border-radius: 22px;
@@ -156,7 +153,6 @@
 		align-items: center;
         width: 100%;
         height: 100%;
-		/* justify-content: space-around; */
 		text-align: center;
     }
 
@@ -168,9 +164,7 @@
         width: 350px;
         height: 170px;
         display: flex;
-        /* flex-direction: column; */
         justify-content: space-between;
-        /* text-align: left; */
     }
 
     .weather__display,
@@ -183,8 +177,6 @@
     .spinnerVisible,
     .weatherData {
         display: block;
-        /* padding: 10px; */
-        /* margin: 10px; */
     } 
 
     /* Medium screen devices (968px and above) */
@@ -207,7 +199,6 @@
             width: 450px;
             height: 220px;
             display: flex;
-            /* flex-direction: column; */
             justify-content: space-evenly;
             text-align: left;
         }
